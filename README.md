@@ -1,12 +1,7 @@
-# pyHeatMap
-
- * Author: oldj
- * Email: oldj.wu@gmail.com
- * Blog: https://oldj.net/
- * Source: https://github.com/oldj/pyheatmap
+# pyHeatMap-numba
 
 
-pyHeatMap is a Python library for painting heat maps. It depends on [Pillow](https://python-pillow.github.io/).
+pyHeatMap-numba is numba version of pyHeatMap. It depends on [Pillow](https://python-pillow.github.io/).
 Python 2/3 compatible.
 
 

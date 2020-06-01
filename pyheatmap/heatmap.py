@@ -15,6 +15,8 @@ import os
 import random
 from PIL import Image
 from PIL import ImageDraw2
+from numba import njit
+import numpy as np
 from .inc import cf
 
 import sys
@@ -23,6 +25,22 @@ if sys.version > '3':
     PY3 = True
 else:
     PY3 = False
+
+@njit
+def heat_numba(heat_data, x, y, n, template, width):
+    u""""""
+
+    l = heat_data.shape[0]
+    p = width * y + x
+
+    for i in range(template.shape[0]):
+        ip = template[i][0]
+        iv = template[i][1]
+        p2 = p + ip
+        if 0 <= p2 and p2 < l:
+            heat_data[p2] = heat_data[p2] + iv * n
+
+
 
 
 class HeatMap(object):
@@ -138,7 +156,10 @@ class HeatMap(object):
         width = self.width
         height = self.height
 
-        max_v = max(heat_data)
+        if isinstance(heat_data, list):
+            max_v = max(heat_data)
+        else:
+            max_v = np.max(heat_data)
         if max_v <= 0:
             # 空图片
             return
@@ -206,16 +227,19 @@ class HeatMap(object):
         self.__mk_img(base)
 
         circle = cf.mk_circle(r, self.width)
-        heat_data = [0] * self.width * self.height
+        # heat_data = [0] * self.width * self.height
+        heat_data = np.zeros(self.width * self.height)
 
         data = data or self.data
 
+        circle_np = np.array([[k, v] for k, v in circle])
         for hit in data:
             x, y, n = hit
             if x < 0 or x >= self.width or y < 0 or y >= self.height:
                 continue
 
-            self.__heat(heat_data, x, y, n, circle)
+            heat_numba(heat_data, x, y, n, circle_np, self.width)
+            # self.__heat(heat_data, x, y, n, circle)
 
         self.__paint_heat(heat_data, cf.mk_colors())
         self.__add_base()

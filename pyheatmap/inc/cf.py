@@ -4,8 +4,9 @@
 # blog: http://oldj.net
 # email: oldj.wu@gmail.com
 #
+import numba as nb
 
-
+# @nb.jit()
 def get_max_size(data):
     max_w = 0
     max_h = 0

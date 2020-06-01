@@ -25,8 +25,9 @@ def main():
     starttime = datetime.datetime.now()
 
     # start painting
-    hm = HeatMap(data)
-    doHeatmap(hm)
+    for i in range(3):
+        hm = HeatMap(data)
+        doHeatmap(hm)
 
     endtime = datetime.datetime.now()
     print(f"It costs {(endtime - starttime).seconds}s.")

@@ -28,8 +28,17 @@ def go_slow():
         trace += np.tanh(a[i, i])
     return a + trace
 
+@nb.njit
+def go_arr(arr):
+    t = [1+e for e in arr]
+    for i in range(arr.shape[0]):
+        arr[i] = 1
+
 
 if __name__ == '__main__':
+    
+    # go_arr(np.zeros(10))
+    
     number = 10 ** 6
     elapse = timeit.timeit(go_fast, number=number)
     print(f"Fast costs {elapse}")

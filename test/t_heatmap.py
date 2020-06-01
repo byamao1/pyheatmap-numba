@@ -5,6 +5,7 @@
 # @File    : test_heatmap.py
 import datetime
 import numba as nb
+import numpy as np
 from pyheatmap.heatmap import HeatMap
 
 
@@ -21,11 +22,14 @@ def main():
             continue
         a = [int(i) for i in a]
         data.append(a)
+    # list -> np.ndarray
+    data = np.array(data)
+
 
     starttime = datetime.datetime.now()
 
     # start painting
-    for i in range(3):
+    for i in range(5):
         hm = HeatMap(data)
         doHeatmap(hm)
 
@@ -33,7 +37,8 @@ def main():
     print(f"It costs {(endtime - starttime).seconds}s.")
 
 def doHeatmap(hm):
-    hm.heatmap(save_as="heat.png")
+    # hm.heatmap(save_as="heat.png")
+    hm.heatmap(save_as=None)  # Don't save
 
 if __name__ == "__main__":
     main()

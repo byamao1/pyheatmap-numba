@@ -5,21 +5,27 @@
 # email: oldj.wu@gmail.com
 #
 import numba as nb
+import numpy as np
 
-# @nb.jit()
+@nb.jit()
 def get_max_size(data):
-    max_w = 0
-    max_h = 0
+    maxes = np.max(data, axis=0)
+    return maxes + 1
 
-    for hit in data:
-        w = hit[0]
-        h = hit[1]
-        if w > max_w:
-            max_w = w
-        if h > max_h:
-            max_h = h
 
-    return max_w + 1, max_h + 1
+# def get_max_size(data):
+#     max_w = 0
+#     max_h = 0
+#
+#     for hit in data:
+#         w = hit[0]
+#         h = hit[1]
+#         if w > max_w:
+#             max_w = w
+#         if h > max_h:
+#             max_h = h
+#
+#     return max_w + 1, max_h + 1
 
 
 def mk_circle(r, w):

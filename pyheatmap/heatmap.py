@@ -15,7 +15,7 @@ import os
 import random
 from PIL import Image
 from PIL import ImageDraw2
-from numba import njit
+from numba import njit, jit, prange
 import numpy as np
 from .inc import cf
 
@@ -26,7 +26,8 @@ if sys.version > '3':
 else:
     PY3 = False
 
-@njit
+# @njit(parallel=True)
+@njit()
 def heat_numba(heat_data, x, y, n, template, width):
     u""""""
 
@@ -52,7 +53,7 @@ class HeatMap(object):
                  ):
         u""""""
 
-        assert type(data) in (list, tuple)
+        assert type(data) in (list, tuple, np.ndarray)
         assert base is None or os.path.isfile(base)
         assert cf.is_num(width) and cf.is_num(height)
         assert width >= 0 and height >= 0

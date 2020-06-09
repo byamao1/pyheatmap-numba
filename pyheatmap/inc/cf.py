@@ -7,7 +7,7 @@
 import numba as nb
 import numpy as np
 
-@nb.jit()
+# @nb.jit()
 def get_max_size(data):
     maxes = np.max(data, axis=0)
     return maxes + 1
